@@ -43,19 +43,39 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-//querydsl 추가 시작
+// //querydsl 추가 시작
+// def querydslDir = "$buildDir/generated/querydsl"
+// querydsl {
+// 	jpa = true
+// 	querydslSourcesDir = querydslDir
+// }
+// sourceSets {
+// 	main.java.srcDir querydslDir
+// }
+// configurations {
+// 	querydsl.extendsFrom compileClasspath
+// }
+// compileQuerydsl {
+// 	options.annotationProcessorPath = configurations.querydsl
+// }
+// //querydsl 추가 끝
+
+// querydsl에서 사용할 경로 설정
 def querydslDir = "$buildDir/generated/querydsl"
+// JPA 사용 여부와 사용할 경로를 설정
 querydsl {
-	jpa = true
-	querydslSourcesDir = querydslDir
+    jpa = true
+    querydslSourcesDir = querydslDir
 }
+// build 시 사용할 sourceSet 추가
 sourceSets {
-	main.java.srcDir querydslDir
+    main.java.srcDir querydslDir
 }
+// querydsl이 compileClassPath 를 상속하도록 설정
 configurations {
-	querydsl.extendsFrom compileClasspath
+    querydsl.extendsFrom compileClasspath
 }
-compileQuerydsl {
-	options.annotationProcessorPath = configurations.querydsl
+// querydsl 컴파일시 사용할 옵션 설정
+compileQuerydsl{
+    options.annotationProcessorPath = configurations.querydsl
 }
-//querydsl 추가 끝

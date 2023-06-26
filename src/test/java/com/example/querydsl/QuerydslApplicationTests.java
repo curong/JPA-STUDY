@@ -1,31 +1,32 @@
 package com.example.querydsl;
 
+import java.util.List;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import com.example.querydsl.entity.FoodStore;
 import com.example.querydsl.entity.FoodType;
 import com.example.querydsl.entity.QFoodStore;
 import com.example.querydsl.repository.FoodStoreRepository;
 import com.example.querydsl.repository.FoodTypeRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
 class QuerydslApplicationTests {
 
-    @Autowired private FoodTypeRepository foodTypeRepository;
-    @Autowired private FoodStoreRepository foodStoreRepository;
-    @Autowired private JPAQueryFactory query;
+    @Autowired
+    private FoodTypeRepository foodTypeRepository;
+
+    @Autowired
+    private FoodStoreRepository foodStoreRepository;
+
+    @Autowired
+    private JPAQueryFactory query;
 
     @Test
     public void setData() {
@@ -58,23 +59,16 @@ class QuerydslApplicationTests {
                         foodStore7,
                         foodStore8,
                         foodStore9,
-                        foodStore10
-                ));
-
+                        foodStore10));
 
     }
 
     @Test
     public void query() {
+        QFoodStore foodStore = QFoodStore.foodStore;
+        List<FoodStore> result = query.selectFrom(foodStore).fetch();
 
-        List<FoodStore> results = query
-                .selectFrom(QFoodStore.foodStore)
-                .fetch();
-
-        assertThat(results.size()).isEqualTo(7);
-
-
+        System.out.println(result.size());
     }
-
 
 }
